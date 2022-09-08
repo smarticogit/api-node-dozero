@@ -1,9 +1,8 @@
 const express = require('express');
+const rotas = require('./rotas');
 
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('Teste ok!')
-})
+app.use(rotas);
 
 app.listen(3000);
