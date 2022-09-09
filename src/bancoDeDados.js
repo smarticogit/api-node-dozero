@@ -1,4 +1,5 @@
 const bancoDeDados = {
+    identificador: 3,
     instrutores: [
         {
             id: 1,
