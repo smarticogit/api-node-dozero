@@ -26,7 +26,7 @@ const cadastrarInstrutor = (req, res) => {
     }
 
     if (!email) {
-        return res.status(400).json({ mensagem: 'O nome é obrigatório' });
+        return res.status(400).json({ mensagem: 'O email é obrigatório' });
     }
 
     const novoInstrutor = {
@@ -41,8 +41,38 @@ const cadastrarInstrutor = (req, res) => {
     return res.status(201).json(novoInstrutor);
 };
 
+const editarInstrutor = (req, res) => {
+    const { id } = req.params; 
+    const { nome, email, status } = req.body;
+
+    if (!nome) {
+        return res.status(400).json({ mensagem: 'O Nome é obrigatório' });
+    }
+
+    if (!email) {
+        return res.status(400).json({ mensagem: 'O Email é obrigatório' });
+    }
+
+    const instrutor = instrutores.find(instrutor => {
+        return instrutor.id === Number(id);
+    });
+
+    if(!instrutor) {
+        return res.status(404).json({ mensagem: 'Instrutor não encontrado!'});
+    }
+    
+    instrutor.nome = nome;
+    instrutor.email = email;
+    instrutor.status = status;
+
+    return res.status(203).send();
+
+
+};
+
 module.exports = { 
     listarInstrutores,
     obterInstrutor,
-    cadastrarInstrutor
+    cadastrarInstrutor,
+    editarInstrutor
 };
