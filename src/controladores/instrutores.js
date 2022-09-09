@@ -1,5 +1,4 @@
-const { instrutores } = require('../bancoDeDados');
-let { identificador } = require('../bancoDeDados');
+let { instrutores, identificador } = require('../bancoDeDados');
 
 const listarInstrutores = (req, res) => {
     return res.json(instrutores);
@@ -85,10 +84,29 @@ const editarInstrutorPatch = (req, res) => {
     return res.status(204).send();
 };
 
+const excluirInstrutor = (req, res) => {
+    const { id } = req.params;
+
+    const instrutor = instrutores.find(instrutor => {
+        return instrutor.id === Number(id);
+    });
+
+    if(!instrutor) {
+        return res.status(404).json({ mensagem: 'Instrutor não encontrado!'});
+    }
+
+    instrutores = instrutores.filter( instrutor => {
+        return instrutor.id !== Number(id);
+    });
+
+    return res.status(204).send();
+};
+
 module.exports = { 
     listarInstrutores,
     obterInstrutor,
     cadastrarInstrutor,
     editarInstrutor,
-    editarInstrutorPatch
+    editarInstrutorPatch,
+    excluirInstrutor
 };
